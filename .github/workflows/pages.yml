@@ -1,0 +1,38 @@
+name: Publish learning worlds
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble static application
+        run: |
+          mkdir -p _site
+          cat worlds.zip.part* > /tmp/worlds.zip
+          echo "04ca3ededa43687f072ef1f4e58f3b7b1fad43939de8c7abefc6f5849e153e82  /tmp/worlds.zip" | sha256sum -c -
+          unzip -q /tmp/worlds.zip -d _site
+          rm -rf _site/.github
+          if [ -d overrides ]; then cp -a overrides/. _site/; fi
+          test -f _site/experience.html
+          test -f _site/assets/world.glb
+          test -f _site/assets/regen-world.glb
+          test -f _site/resources.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
