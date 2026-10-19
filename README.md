@@ -25,3 +25,11 @@ Scores, profiles and suggestion drafts stay in the current browser. They do not 
 The private teacher application has separate account-based storage and moderation. It is not automatically synchronized with this public Pages edition.
 
 WebXR requires a compatible browser/device and HTTPS. Actual headset VR and phone AR still require device testing.
+
+## Student links
+
+- [PEACEVERSE](https://sev84.github.io/peaceverse-g2b-worlds/experience.html)
+- [STEMCYCLE G2B ReGen](https://sev84.github.io/peaceverse-g2b-worlds/regen.html)
+- [Documents and suggestion board](https://sev84.github.io/peaceverse-g2b-worlds/resources.html)
+
+First successful publication: 19 October 2026. All three entry pages, four PEACEVERSE language choices, the monthly mission and local suggestion saving were verified in the browser. WebGL is disabled in that test browser, so real-time rendering and VR/AR headset behavior remain unverified.
