@@ -1,4 +1,4 @@
-import {language} from './i18n.mjs';
+import {language,L} from './i18n.mjs';
 const words={
  en:{title:'Audio guide',language:'English → Turkish narration',note:'Each recording plays English first, then Turkish. Romanian and Ukrainian are available as written page content.',choose:'Choose a scene',play:'Play / pause narration',transcript:'Read the recording transcript (EN / TR)',open:'Open audio file',padlet:'Open this scene’s Padlet ↗',ready:'Press play to listen.',error:'The recording could not load. Check your connection or open the audio file.',stopped:'Narration paused.'},
  tr:{title:'Sesli rehber',language:'İngilizce → Türkçe seslendirme',note:'Her kayıtta önce İngilizce, ardından Türkçe konuşulur. Romence ve Ukraynaca içerik sayfalarda yazılı olarak bulunur.',choose:'Sahne seç',play:'Seslendirmeyi oynat / duraklat',transcript:'Seslendirme metnini oku (EN / TR)',open:'Ses dosyasını aç',padlet:'Bu sahnenin Padlet panosunu aç ↗',ready:'Dinlemek için oynat düğmesine basın.',error:'Ses kaydı yüklenemedi. Bağlantınızı kontrol edin veya ses dosyasını açın.',stopped:'Seslendirme duraklatıldı.'},
@@ -14,7 +14,7 @@ export async function createAudioGuide(project){
  const audio=document.createElement('audio');audio.controls=true;audio.preload='none';audio.id='scene-narration';audio.setAttribute('aria-label',t.language);
  let current=-1,status=null;
  const select=index=>{if(!tracks[index])return;if(current!==index){audio.pause();current=index;audio.src=tracks[index].src;}if(status)status.textContent=t.ready;};
- audio.addEventListener('play',()=>{document.getElementById('ambient')?.pause();const button=document.getElementById('music-button');if(button)button.setAttribute('aria-pressed','false');if(status)status.textContent=t.language;});
+ audio.addEventListener('play',()=>{document.getElementById('ambient')?.pause();const button=document.getElementById('music-button');if(button){button.setAttribute('aria-pressed','false');button.textContent=L('♫ Müzik');}if(status)status.textContent=t.language;});
  audio.addEventListener('error',()=>{if(status)status.textContent=t.error;});
  const stop=()=>{audio.pause();if(status)status.textContent=t.stopped;};
  async function toggle(index){select(index);if(audio.paused){try{await audio.play();}catch{if(status)status.textContent=t.error;}}else stop();}
